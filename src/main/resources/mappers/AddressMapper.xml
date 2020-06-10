@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace = "com.example.demo.mapper.AddressMapper">
+
+    <insert id = "insert" useGeneratedKeys="true" keyProperty="aid">
+        insert into address (
+            uid,
+            name,
+            provinceName,
+            cityName,
+            areaName,
+            address,
+            phone,
+            isDefault,
+            createdUser,
+            createdTime
+        )values (
+            #{uid},
+            #{name},
+            #{provinceName},
+            #{cityName},
+            #{areaName},
+            #{address},
+            #{phone},
+            #{isDefault},
+            #{createdUser},
+            #{createdTime}
+        )
+    </insert>
+
+    <select id = "countByUid" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            address
+        WHERE
+            uid=#{uid}
+    </select>
+
+    <select id = "findByUid" resultType="com.example.demo.bean.Address">
+        select
+            aid,
+            uid,
+            name,
+            provinceName,
+            cityName,
+            areaName,
+            address,
+            phone,
+            isDefault,
+            createdUser,
+            createdTime
+        from
+            address
+        where
+            uid = #{uid}
+    </select>
+
+    <select id = "findByAid" resultType="com.example.demo.bean.Address">
+        select
+            aid,
+            uid,
+            name,
+            provinceName,
+            cityName,
+            areaName,
+            address,
+            phone,
+            isDefault,
+            createdUser,
+            createdTime
+        from
+            address
+        where
+            aid = #{aid}
+    </select>
+
+    <delete id ="deleteByAid">
+        DELETE FROM
+            address
+        WHERE
+            aid=#{aid}
+    </delete>
+
+    <update id = "updateDefault">
+        UPDATE
+            address
+        SET
+            isDefault=1
+        WHERE
+            aid=#{aid}
+    </update>
+
+    <update id = "updateNonDefault">
+        UPDATE
+            address
+        SET
+            isDefault=0
+        WHERE
+            uid=#{uid}
+    </update>
+
+    <select id = "findLastModified" resultType="com.example.demo.bean.BaseEntity">
+        SELECT
+            aid
+        FROM
+            address
+        WHERE
+            uid=#{uid}
+        ORDER BY
+            createdTime desc
+        LIMIT 0,1
+    </select>
+
+</mapper>
+

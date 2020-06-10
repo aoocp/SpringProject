@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace ="com.example.demo.mapper.GoodsMapper">
+    <select id="findHotList" resultType ="com.example.demo.bean.Goods">
+        SELECT
+            gid,
+            title,
+            price,
+            itemType
+        FROM
+            goods
+        WHERE
+            status=1 AND num>50
+        ORDER BY
+            priority DESC
+            LIMIT 0,100
+    </select>
+
+    <select id="findById" resultType="com.example.demo.bean.Goods">
+        SELECT
+            title,
+            price,
+            status,
+            num
+        FROM
+            goods
+        WHERE
+            gid=#{id}
+    </select>
+</mapper>

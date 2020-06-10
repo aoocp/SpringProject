@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.CartMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="cid">
+        INSERT INTO cart (
+            uid,
+            gid,
+            num,
+            createdUser,
+            createdTime
+        ) VALUES (
+            #{uid},
+            #{gid},
+            #{num},
+            #{createdUser},
+            #{createdTime}
+        )
+    </insert>
+
+    <select id="findByUidAndGid" resultType="com.example.demo.bean.Cart">
+        SELECT
+            cid, num
+        FROM
+            cart
+        WHERE
+            uid=#{uid} AND gid=#{gid}
+    </select>
+
+    <update id="updateNum">
+        UPDATE
+            cart
+        SET
+            num=#{num}
+        WHERE
+            cid=#{cid}
+    </update>
+
+    <select id="findByUid" resultType="com.example.demo.bean.CartVO">
+        SELECT
+            cid,
+            uid,
+            goods.gid,
+            title,
+            price,
+            cart.num
+        FROM
+            cart
+        LEFT JOIN
+            goods
+        ON
+            cart.gid=goods.gid
+        WHERE
+            uid=#{uid}
+        ORDER BY
+            cart.createdTime DESC
+    </select>
+
+    <select id="findByCid" resultType="com.example.demo.bean.Cart">
+        SELECT
+            uid, num
+        FROM
+            cart
+        WHERE
+            cid=#{cid}
+    </select>
+
+    <select id="findByCids" resultType="com.example.demo.bean.CartVO">
+        SELECT
+        cid,
+        uid,
+        goods.gid,
+        title,
+        price,
+        cart.num
+        FROM
+        cart
+        LEFT JOIN
+        goods
+        ON
+        cart.gid=goods.gid
+        WHERE
+        cid IN
+        <foreach collection="array" item="cid" open="(" separator="," close=")">
+            #{cid}
+        </foreach>
+        ORDER BY
+        cart.createdTime DESC
+    </select>
+
+    <delete id="delete">
+        delete from cart
+        where
+            cid=#{cid};
+    </delete>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.OrderMapper">
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="oid">
+        INSERT INTO orders(
+            uid,
+            aid,
+            recvName,
+            recvPhone,
+            recvAddress,
+            totalPrice,
+            state,
+            createdUser,
+            createdTime
+        ) values (
+            #{uid},
+            #{aid},
+            #{recvName},
+            #{recvPhone},
+            #{recvAddress},
+            #{totalPrice},
+            #{state},
+            #{createdUser},
+            #{createdTime}
+        )
+    </insert>
+</mapper>
